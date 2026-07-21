@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Italiana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap');
 
 :root {
   --ink: #0b0b0a;
@@ -7,7 +7,7 @@
   --blood: #971c35;
   --gold: #c6a15a;
   --muted: #8f887d;
-  --serif: 'Italiana', 'Bodoni 72', Didot, Georgia, serif;
+  --serif: 'Cardo', Georgia, 'Times New Roman', serif;
   --mono: 'DM Mono', 'Courier New', monospace;
   --pad: clamp(1.25rem, 5vw, 5rem);
   --line: 1px solid currentColor;
