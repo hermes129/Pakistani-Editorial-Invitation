@@ -13,22 +13,56 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 const main = document.querySelector('main');
 const intro = document.querySelector('.intro');
 const introButton = document.querySelector('.intro__open');
+const skipLink = document.querySelector('.skip-link');
+const music = document.querySelector('#site-music');
+const musicToggle = document.querySelector('#music-toggle');
+const musicLabel = musicToggle.querySelector('.music-toggle__label');
 
 main.inert = true;
+music.volume = 0.32;
 
-function openInvitation() {
+function syncMusicControl() {
+  const isPlaying = !music.paused;
+  musicToggle.classList.toggle('is-playing', isPlaying);
+  musicToggle.setAttribute('aria-pressed', String(isPlaying));
+  musicToggle.setAttribute('aria-label', isPlaying ? 'Pause background music' : 'Play background music');
+  musicLabel.textContent = isPlaying ? 'Music on' : 'Play music';
+}
+
+async function setMusicPlaying(shouldPlay) {
+  if (!shouldPlay) {
+    music.pause();
+    syncMusicControl();
+    return;
+  }
+
+  try {
+    await music.play();
+  } catch {
+    showToast('Use the music button whenever you would like sound.');
+  }
+  syncMusicControl();
+}
+
+function openInvitation(startMusic = true) {
   if (intro.classList.contains('is-opening')) return;
   intro.classList.add('is-opening');
   document.body.classList.remove('intro-active');
   main.inert = false;
-  const delay = reducedMotion ? 0 : 1050;
+  musicToggle.hidden = false;
+  if (startMusic) setMusicPlaying(true);
+  const delay = reducedMotion ? 0 : 1500;
   window.setTimeout(() => {
     intro.hidden = true;
     main.focus({ preventScroll: true });
   }, delay);
 }
 
-introButton.addEventListener('click', openInvitation);
+introButton.addEventListener('click', () => openInvitation(true));
+skipLink.addEventListener('click', () => openInvitation(false));
+musicToggle.addEventListener('click', () => setMusicPlaying(music.paused));
+music.addEventListener('play', syncMusicControl);
+music.addEventListener('pause', syncMusicControl);
 
 const revealItems = document.querySelectorAll('.js-reveal');
 if (reducedMotion || !('IntersectionObserver' in window)) {

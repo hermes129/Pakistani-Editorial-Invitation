@@ -11,25 +11,41 @@
   <body class="intro-active">
     <a class="skip-link" href="#invitation">Skip to the invitation</a>
 
-    <section class="intro" aria-labelledby="intro-title" aria-describedby="intro-note">
-      <div class="intro__panel intro__panel--left" aria-hidden="true">
-        <span class="intro__folio">Vol. 01 / Karachi</span>
-        <span class="intro__letter">N</span>
-        <span class="intro__vertical">A celebration in three acts</span>
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="intro__backdrop" aria-hidden="true"></div>
+      <div class="intro__stage">
+        <article class="intro-card">
+          <div class="intro-card__leaf intro-card__leaf--left" aria-hidden="true">
+            <img class="intro-card__image" src="./assets/editorial-card-cover.webp" alt="" />
+            <span class="intro-card__wash"></span>
+            <span class="intro-card__edge"></span>
+          </div>
+          <div class="intro-card__leaf intro-card__leaf--right" aria-hidden="true">
+            <img class="intro-card__image" src="./assets/editorial-card-cover.webp" alt="" />
+            <span class="intro-card__wash"></span>
+            <span class="intro-card__edge"></span>
+          </div>
+
+          <div class="intro-card__copy">
+            <p class="intro-card__edition">The wedding issue <span>Vol. 01</span></p>
+            <h1 id="intro-title" class="sr-only">Noor and Zayn's wedding invitation</h1>
+            <p class="intro-card__date">Karachi <span>17 · 10 · 2026</span></p>
+          </div>
+
+          <button class="seal intro__open" type="button" aria-label="Tap to open Noor and Zayn's wedding invitation">
+            <svg class="seal__ring" viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <path id="seal-ring-path" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0" />
+              </defs>
+              <text>
+                <textPath href="#seal-ring-path" startOffset="2%">TAP TO OPEN · THE WEDDING ISSUE · </textPath>
+              </text>
+            </svg>
+            <span class="seal__monogram">N <i>&amp;</i> Z</span>
+          </button>
+        </article>
       </div>
-      <div class="intro__panel intro__panel--right" aria-hidden="true">
-        <span class="intro__folio">Saturday / 17.10.26</span>
-        <span class="intro__letter">Z</span>
-        <span class="intro__vertical">Contemporary Pakistani editorial</span>
-      </div>
-      <div class="intro__center">
-        <p class="kicker">Noor &amp; Zayn present</p>
-        <h1 id="intro-title">The<br /><em>wedding</em><br />issue</h1>
-        <button class="button button--paper intro__open" type="button">
-          <span>Open invitation</span><span aria-hidden="true">↗</span>
-        </button>
-        <p id="intro-note" class="intro__note">Sound optional. Celebration essential.</p>
-      </div>
+
     </section>
 
     <main id="invitation" tabindex="-1">
@@ -169,6 +185,7 @@
       <footer class="footer">
         <p class="kicker">Noor &amp; Zayn / 17.10.26</p>
         <p>Made with love in Karachi.</p>
+        <p class="footer__credit">Music: <a href="https://commons.wikimedia.org/wiki/File:RanjitMakkuniRagaKaushiKanra.ogg" target="_blank" rel="noreferrer">Kaushi Kanra by Ranjit Makkuni &amp; Akram Khan · CC BY-SA 3.0</a></p>
         <a href="#invitation">Back to top ↑</a>
       </footer>
     </main>
@@ -209,6 +226,13 @@
 
     <div class="toast" role="status" aria-live="polite" hidden></div>
     <div class="confetti" aria-hidden="true"></div>
+    <audio id="site-music" loop preload="metadata">
+      <source src="./assets/raga-kaushi-kanra.ogg" type="audio/ogg" />
+    </audio>
+    <button class="music-toggle" id="music-toggle" type="button" aria-pressed="false" aria-label="Play background music" hidden>
+      <span class="music-toggle__icon" aria-hidden="true"><i></i><i></i></span>
+      <span class="music-toggle__label">Play music</span>
+    </button>
     <noscript><style>.intro{display:none!important}body{overflow:auto!important}.js-reveal{opacity:1!important;transform:none!important}</style></noscript>
     <script type="module" src="/src/main.js"></script>
   </body>
