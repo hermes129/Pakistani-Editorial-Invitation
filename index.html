@@ -63,7 +63,13 @@
 
       <section id="announcement" class="announcement section section--paper" aria-labelledby="announcement-title">
         <div class="section-index kicker">00 — The announcement</div>
-        <div class="announcement__date" aria-hidden="true"><span>17</span><span>10</span><span>26</span></div>
+        <div class="scratch-reveal" data-scratch-reveal>
+          <div class="announcement__date" aria-label="Wedding date: 17 October 2026"><span>17</span><span>10</span><span>26</span></div>
+          <canvas class="scratch-reveal__canvas" aria-hidden="true"></canvas>
+          <p class="scratch-reveal__hint" aria-hidden="true">Scratch to reveal</p>
+          <button class="scratch-reveal__button" type="button">Reveal date</button>
+          <p class="sr-only" data-scratch-status aria-live="polite"></p>
+        </div>
         <div class="announcement__copy js-reveal">
           <p class="announcement__lead">Together with their families</p>
           <h2 id="announcement-title">Noor &amp; Zayn<br /><em>are getting married.</em></h2>
