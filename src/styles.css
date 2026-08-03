@@ -92,16 +92,19 @@ h2 em, h1 em { font-weight: 400; }
 .hero__scroll { z-index: 3; grid-column: 10 / 13; grid-row: 3; align-self: end; display: flex; justify-content: space-between; min-height: 3rem; padding-bottom: .65rem; border-bottom: 1px solid; font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .08em; text-decoration: none; }
 
 .announcement { min-height: 90svh; display: grid; grid-template-columns: 1fr 2fr; grid-template-rows: auto 1fr; gap: 3rem; border-bottom: 1px solid rgba(11,11,10,.2); overflow: hidden; }
-.scratch-reveal { position: relative; grid-column: 1; align-self: end; isolation: isolate; user-select: none; -webkit-user-select: none; }
-.announcement__date { display: flex; flex-direction: column; font: clamp(8rem, 19vw, 18rem)/.67 var(--serif); letter-spacing: -.08em; color: var(--blood); }
-.scratch-reveal__canvas { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1); }
-.scratch-reveal__hint { position: absolute; z-index: 3; top: 50%; left: 50%; margin: 0; padding: .55rem .75rem; background: var(--paper); color: var(--blood); border: 1px solid var(--blood); font: 500 .67rem/1 var(--mono); letter-spacing: .11em; text-transform: uppercase; white-space: nowrap; transform: translate(-50%, -50%) rotate(-2deg); pointer-events: none; transition: opacity .2s ease; }
-.scratch-reveal__button { position: absolute; z-index: 4; right: .65rem; bottom: .65rem; min-height: 2.75rem; padding: .65rem .8rem; border: 1px solid var(--paper); background: rgba(11,11,10,.88); color: var(--paper); font: 500 .62rem/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; cursor: pointer; transition: background-color .2s, color .2s; }
-.scratch-reveal__button:hover { background: var(--gold); color: var(--ink); }
-.scratch-reveal.is-scratching .scratch-reveal__hint { opacity: 0; }
-.scratch-reveal.is-revealed .scratch-reveal__canvas { opacity: 0; transform: scale(1.015); pointer-events: none; }
-.scratch-reveal.is-revealed .scratch-reveal__hint,
-.scratch-reveal.is-revealed .scratch-reveal__button { display: none; }
+.date-scratch { width: min(100%, 32rem); grid-column: 1; align-self: end; user-select: none; -webkit-user-select: none; }
+.date-scratch__stage { position: relative; display: grid; place-items: center; min-height: clamp(7rem, 12vw, 10rem); overflow: hidden; border: 1px solid var(--ink); background: var(--paper); }
+.date-scratch__value { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1rem; color: var(--blood); font: clamp(4rem, 7.5vw, 7.5rem)/1 var(--serif); letter-spacing: -.05em; white-space: nowrap; }
+.date-scratch__value i { color: var(--muted); font-size: .35em; font-style: normal; }
+.date-scratch__canvas { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1); }
+.date-scratch__hint { position: absolute; z-index: 3; top: 50%; left: 50%; margin: 0; padding: .55rem .75rem; border: 1px solid var(--blood); background: var(--paper); color: var(--blood); font: 500 .67rem/1 var(--mono); letter-spacing: .11em; text-transform: uppercase; white-space: nowrap; transform: translate(-50%, -50%) rotate(-2deg); pointer-events: none; transition: opacity .2s ease; }
+.date-scratch__button { min-width: 9rem; min-height: 2.75rem; margin-top: .65rem; padding: .65rem .8rem; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 500 .65rem/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; cursor: pointer; }
+.date-scratch__button:hover { background: var(--blood); color: var(--paper); border-color: var(--blood); }
+.date-scratch.is-scratching .date-scratch__hint { opacity: 0; }
+.date-scratch.is-revealed .date-scratch__canvas { opacity: 0; transform: scale(1.015); pointer-events: none; }
+.date-scratch.is-revealed .date-scratch__hint, .date-scratch.is-revealed .date-scratch__button { opacity: 0; pointer-events: none; }
+.date-scratch [hidden] { display: none!important; }
+.date-scratch .sr-only { position: absolute!important; width: 1px!important; height: 1px!important; padding: 0!important; margin: -1px!important; overflow: hidden!important; clip: rect(0,0,0,0)!important; white-space: nowrap!important; border: 0!important; }
 .announcement__copy { grid-column: 2; align-self: center; max-width: 60rem; }
 .announcement__lead { font: italic clamp(1.1rem, 1.8vw, 1.5rem) var(--serif); }
 .announcement__copy h2 { margin-bottom: 2rem; font-size: clamp(4.5rem, 9vw, 9rem); }
@@ -271,12 +274,10 @@ h2 em, h1 em { font-weight: 400; }
 
   .announcement { min-height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 2rem; }
   .announcement .section-index { grid-row: 1; }
-  .scratch-reveal { grid-column: 1; grid-row: 2; width: 100%; }
-  .announcement__date { flex-direction: row; justify-content: space-between; font-size: clamp(6rem, 26vw, 8rem); }
-  .scratch-reveal:not(.is-revealed) { padding-bottom: 3.35rem; }
-  .scratch-reveal__canvas { bottom: 3.35rem; height: auto; }
-  .scratch-reveal__hint { top: calc((100% - 3.35rem) / 2); }
-  .scratch-reveal__button { right: 0; bottom: 0; min-height: 2.65rem; border-color: var(--ink); }
+  .date-scratch { grid-column: 1; grid-row: 2; width: 100%; }
+  .date-scratch__stage { min-height: 6.5rem; }
+  .date-scratch__value { font-size: clamp(4rem, 19vw, 6rem); }
+  .date-scratch__button { width: 100%; }
   .announcement__copy { grid-column: 1; grid-row: 3; }
   .announcement__copy h2 { font-size: clamp(3.7rem, 15vw, 5.4rem); }
   .announcement__actions { flex-direction: row; flex-wrap: nowrap; align-items: flex-start; gap: clamp(1.15rem, 6vw, 2rem); }

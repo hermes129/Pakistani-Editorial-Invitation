@@ -1,4 +1,5 @@
 import './styles.css';
+import { initDateScratch } from './date-scratch.js';
 
 const EVENT = {
   title: 'Noor & Zayn — Wedding',
@@ -20,6 +21,7 @@ const musicLabel = musicToggle.querySelector('.music-toggle__label');
 
 main.inert = true;
 music.volume = 0.32;
+initDateScratch();
 
 function syncMusicControl() {
   const isPlaying = !music.paused;
@@ -77,129 +79,6 @@ if (reducedMotion || !('IntersectionObserver' in window)) {
   }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
   revealItems.forEach((item) => revealObserver.observe(item));
 }
-
-function initialiseScratchReveal(container) {
-  const canvas = container.querySelector('.scratch-reveal__canvas');
-  const revealButton = container.querySelector('.scratch-reveal__button');
-  const status = container.querySelector('[data-scratch-status]');
-  const context = canvas.getContext('2d');
-  const visitedCells = new Set();
-  const gridSize = 18;
-  let drawing = false;
-  let revealed = false;
-  let lastPoint = null;
-
-  if (!context) {
-    canvas.hidden = true;
-    revealButton.textContent = 'Date revealed';
-    revealButton.disabled = true;
-    return;
-  }
-
-  function paintCover() {
-    if (revealed) return;
-    const bounds = container.getBoundingClientRect();
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.max(1, Math.round(bounds.width * ratio));
-    canvas.height = Math.max(1, Math.round(bounds.height * ratio));
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    context.globalCompositeOperation = 'source-over';
-    context.fillStyle = '#0b0b0a';
-    context.fillRect(0, 0, bounds.width, bounds.height);
-
-    context.strokeStyle = 'rgba(198, 161, 90, .4)';
-    context.lineWidth = 1;
-    const spacing = Math.max(18, bounds.width / 12);
-    for (let offset = -bounds.height; offset < bounds.width; offset += spacing) {
-      context.beginPath();
-      context.moveTo(offset, 0);
-      context.lineTo(offset + bounds.height, bounds.height);
-      context.stroke();
-    }
-
-    context.strokeStyle = '#c6a15a';
-    context.lineWidth = 2;
-    context.strokeRect(5, 5, Math.max(0, bounds.width - 10), Math.max(0, bounds.height - 10));
-  }
-
-  function pointFromEvent(event) {
-    const bounds = canvas.getBoundingClientRect();
-    return { x: event.clientX - bounds.left, y: event.clientY - bounds.top, width: bounds.width, height: bounds.height };
-  }
-
-  function markVisited(point) {
-    const cellX = Math.max(0, Math.min(gridSize - 1, Math.floor((point.x / point.width) * gridSize)));
-    const cellY = Math.max(0, Math.min(gridSize - 1, Math.floor((point.y / point.height) * gridSize)));
-    const radius = 2;
-    for (let x = cellX - radius; x <= cellX + radius; x += 1) {
-      for (let y = cellY - radius; y <= cellY + radius; y += 1) {
-        if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) visitedCells.add(`${x}:${y}`);
-      }
-    }
-  }
-
-  function scratch(point) {
-    const brushSize = Math.max(34, Math.min(point.width, point.height) * .17);
-    context.globalCompositeOperation = 'destination-out';
-    context.lineCap = 'round';
-    context.lineJoin = 'round';
-    context.lineWidth = brushSize;
-    context.beginPath();
-    if (lastPoint) context.moveTo(lastPoint.x, lastPoint.y);
-    else context.moveTo(point.x, point.y);
-    context.lineTo(point.x, point.y);
-    context.stroke();
-    markVisited(point);
-    lastPoint = point;
-
-    if (visitedCells.size / (gridSize * gridSize) >= .38) revealDate();
-  }
-
-  function revealDate() {
-    if (revealed) return;
-    revealed = true;
-    drawing = false;
-    container.classList.add('is-revealed');
-    status.textContent = 'Wedding date revealed: 17 October 2026.';
-    try { window.sessionStorage.setItem('noor-zayn-date-revealed', 'true'); } catch { /* Storage may be unavailable. */ }
-    window.setTimeout(() => { canvas.hidden = true; }, reducedMotion ? 0 : 560);
-  }
-
-  canvas.addEventListener('pointerdown', (event) => {
-    if (revealed) return;
-    drawing = true;
-    lastPoint = null;
-    container.classList.add('is-scratching');
-    canvas.setPointerCapture(event.pointerId);
-    scratch(pointFromEvent(event));
-  });
-  canvas.addEventListener('pointermove', (event) => {
-    if (!drawing || revealed) return;
-    scratch(pointFromEvent(event));
-  });
-  canvas.addEventListener('pointerup', () => { drawing = false; lastPoint = null; });
-  canvas.addEventListener('pointercancel', () => { drawing = false; lastPoint = null; });
-  revealButton.addEventListener('click', revealDate);
-
-  try {
-    if (window.sessionStorage.getItem('noor-zayn-date-revealed') === 'true') revealDate();
-    else paintCover();
-  } catch {
-    paintCover();
-  }
-
-  if ('ResizeObserver' in window) {
-    const resizeObserver = new ResizeObserver(() => {
-      if (!revealed && !drawing) {
-        visitedCells.clear();
-        paintCover();
-      }
-    });
-    resizeObserver.observe(container);
-  }
-}
-
-document.querySelectorAll('[data-scratch-reveal]').forEach(initialiseScratchReveal);
 
 function updateCountdown() {
   const difference = Math.max(0, EVENT.localDate.getTime() - Date.now());
