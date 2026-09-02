@@ -1,16 +1,22 @@
 import './styles.css';
 import { initDateScratch } from './date-scratch.js';
+import { initMotifs, initDraw } from './utils/draw.js';
+import { initEvening } from './evening.js';
 
 const EVENT = {
-  title: 'Noor & Zayn — Wedding',
+  title: 'Noor & Zayn, Wedding',
   start: '20261017T110000Z',
   end: '20261017T170000Z',
   localDate: new Date('2026-10-17T16:00:00+05:00'),
   location: 'Beach Luxury Hotel, M. T. Khan Road, Karachi, Pakistan',
-  description: 'Nikkah, dinner and dancing with Noor and Zayn.'
+  description: 'Ceremony, dinner and dancing with Noor and Zayn.'
 };
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Illustration layer, injected before anything measures the DOM.
+initMotifs();
+initDraw(reducedMotion);
 const main = document.querySelector('main');
 const intro = document.querySelector('.intro');
 const introButton = document.querySelector('.intro__open');
@@ -57,6 +63,9 @@ function openInvitation(startMusic = true) {
   window.setTimeout(() => {
     intro.hidden = true;
     main.focus({ preventScroll: true });
+    // The intro is a fixed overlay and the body cannot scroll behind it, so
+    // this is the first moment the page can be measured at all.
+    initEvening(reducedMotion);
   }, delay);
 }
 
@@ -66,8 +75,15 @@ musicToggle.addEventListener('click', () => setMusicPlaying(music.paused));
 music.addEventListener('play', syncMusicControl);
 music.addEventListener('pause', syncMusicControl);
 
+// The fold drives these elements when it runs. Two systems animating the
+// same transform is how a leaf ends up stuck half open. It is started in
+// openInvitation, not here: nothing below the intro overlay can be measured
+// while the overlay is still up.
+const eveningActive = !reducedMotion;
 const revealItems = document.querySelectorAll('.js-reveal');
-if (reducedMotion || !('IntersectionObserver' in window)) {
+if (eveningActive) {
+  // GSAP owns opacity and transform from here.
+} else if (reducedMotion || !('IntersectionObserver' in window)) {
   revealItems.forEach((item) => item.classList.add('is-visible'));
 } else {
   const revealObserver = new IntersectionObserver((entries, observer) => {

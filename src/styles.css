@@ -34,9 +34,7 @@ h2 em, h1 em { font-weight: 400; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .kicker, .section-index { font-family: var(--mono); font-size: .78rem; font-weight: 500; line-height: 1.5; letter-spacing: .11em; text-transform: uppercase; }
 .section { position: relative; padding: clamp(5rem, 9vw, 9rem) var(--pad); }
-.section--paper { background: var(--paper); color: var(--ink); }
-.section--ink { background: var(--ink); color: var(--paper); }
-.section--blood { background: var(--blood); color: var(--paper); }
+.section--paper, .section--ink, .section--blood { background: transparent; color: var(--ground-ink); }
 .button { min-height: 3.25rem; min-width: 3.25rem; display: inline-flex; align-items: center; justify-content: space-between; gap: 2rem; padding: .95rem 1.15rem; border: 1px solid transparent; border-radius: 0; font: 500 .76rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
 .button--paper { background: var(--paper); color: var(--ink); }
 .button--blood { background: var(--blood); color: var(--paper); text-decoration: none; }
@@ -80,14 +78,14 @@ h2 em, h1 em { font-weight: 400; }
 .hero { min-height: 100svh; position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr auto; gap: 1rem; padding: 1.5rem var(--pad) 2rem; background: var(--ink); color: var(--paper); }
 .hero__rule { position: absolute; inset: .75rem; border: 1px solid rgba(243,236,221,.2); pointer-events: none; }
 .hero__issue { grid-column: 1 / 5; z-index: 2; }
-.hero__issue span { color: var(--blood); margin-left: 1.5rem; }
+.hero__issue span { color: var(--accent); margin-left: 1.5rem; }
 .hero__place { grid-column: 10 / 13; z-index: 2; text-align: right; }
 .hero__image { grid-column: 5 / 11; grid-row: 1 / 4; min-height: calc(100svh - 3rem); margin: -1.5rem 0 -2rem; overflow: hidden; }
 .hero__image img { width: 100%; height: 100%; object-fit: cover; object-position: 57% center; filter: contrast(1.03); }
 .hero__title { position: absolute; z-index: 2; inset: 50% var(--pad) auto; transform: translateY(-48%); margin: 0; font-size: clamp(7rem, 17vw, 18rem); text-transform: uppercase; line-height: .69; pointer-events: none; }
 .hero__title span { display: block; }
 .hero__title span:last-child { text-align: right; }
-.hero__and { position: absolute; z-index: 3; top: 50%; left: 50%; color: var(--blood); font-size: .15em; line-height: 1; text-transform: none; font-style: italic; white-space: nowrap; transform: translate(-50%, -50%) rotate(-8deg); transform-origin: center; }
+.hero__and { position: absolute; z-index: 3; top: 50%; left: 50%; color: var(--accent); font-size: .15em; line-height: 1; text-transform: none; font-style: italic; white-space: nowrap; transform: translate(-50%, -50%) rotate(-8deg); transform-origin: center; }
 .hero__dek { z-index: 3; grid-column: 1 / 4; grid-row: 3; align-self: end; margin: 0 0 2.5rem; font: clamp(1.15rem, 1.8vw, 1.65rem)/1.2 var(--serif); }
 .hero__scroll { z-index: 3; grid-column: 10 / 13; grid-row: 3; align-self: end; display: flex; justify-content: space-between; min-height: 3rem; padding-bottom: .65rem; border-bottom: 1px solid; font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .08em; text-decoration: none; }
 
@@ -108,7 +106,7 @@ h2 em, h1 em { font-weight: 400; }
 .announcement__copy { grid-column: 2; align-self: center; max-width: 60rem; }
 .announcement__lead { font: italic clamp(1.1rem, 1.8vw, 1.5rem) var(--serif); }
 .announcement__copy h2 { margin-bottom: 2rem; font-size: clamp(4.5rem, 9vw, 9rem); }
-.announcement__copy h2 em { color: var(--blood); }
+.announcement__copy h2 em { color: var(--accent); }
 .announcement__copy > p:last-of-type { max-width: 36rem; font-size: clamp(1rem, 1.35vw, 1.2rem); }
 .announcement__actions { display: flex; gap: 2rem; margin-top: 2rem; }
 .text-action { min-height: 3rem; padding: 0 0 .45rem; background: none; border: 0; border-bottom: 1px solid; color: inherit; font: .75rem var(--mono); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; cursor: pointer; }
@@ -116,7 +114,7 @@ h2 em, h1 em { font-weight: 400; }
 .story { overflow: hidden; }
 .story__heading { width: min(100%, 65rem); margin-bottom: clamp(3.5rem, 8vw, 7rem); }
 .story__heading h2 { margin: 1.5rem 0 2rem; }
-.story__heading h2 em { color: var(--blood); }
+.story__heading h2 em { color: var(--accent); }
 .story__heading > p:last-child { max-width: 34rem; font-size: 1.1rem; }
 .story__grid { display: grid; grid-template-columns: 1.05fr .8fr 1.25fr; gap: clamp(1rem, 3vw, 3rem); align-items: start; }
 .story-card { margin: 0; border: 1px solid var(--ink); background: var(--paper); padding: .75rem; box-shadow: .85rem .85rem 0 rgba(151,28,53,.12); }
@@ -141,7 +139,7 @@ h2 em, h1 em { font-weight: 400; }
 .programme { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(3rem, 8vw, 8rem); }
 .programme__heading { position: sticky; top: 2rem; align-self: start; }
 .programme__heading h2 { margin: 1.5rem 0 0; font-size: clamp(4.5rem, 8vw, 8.5rem); }
-.programme__heading h2 em { color: var(--ink); }
+.programme__heading h2 em { color: var(--accent); }
 .programme__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid currentColor; }
 .programme__list li { min-height: 9.25rem; display: grid; grid-template-columns: 1fr 2fr auto; gap: 1.5rem; align-items: center; border-bottom: 1px solid currentColor; }
 .programme__list time { font: clamp(2.5rem, 5vw, 5rem)/1 var(--serif); }
@@ -152,7 +150,7 @@ h2 em, h1 em { font-weight: 400; }
 .dress { min-height: 100svh; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: clamp(2rem, 6vw, 7rem); overflow: hidden; }
 .dress__copy { z-index: 2; }
 .dress__copy h2 { margin: 1.5rem 0 2rem; }
-.dress__copy h2 em { color: var(--blood); }
+.dress__copy h2 em { color: var(--accent); }
 .dress__copy > p:last-of-type { max-width: 32rem; }
 .dress__palette { display: flex; gap: .75rem; margin-top: 2.5rem; }
 .dress__palette span { position: relative; width: 3rem; height: 3rem; background: var(--swatch); border: 1px solid rgba(243,236,221,.4); border-radius: 50%; }
@@ -165,13 +163,13 @@ h2 em, h1 em { font-weight: 400; }
 .highlights { display: grid; grid-template-columns: .75fr 1.25fr; grid-template-rows: auto auto; gap: clamp(2.5rem, 6vw, 6rem); align-items: end; }
 .highlights__heading { align-self: start; }
 .highlights__heading h2 { margin: 1.5rem 0 2rem; font-size: clamp(4.5rem, 8vw, 8rem); }
-.highlights__heading h2 em { color: var(--blood); }
+.highlights__heading h2 em { color: var(--accent); }
 .highlights__heading > p:last-child { max-width: 29rem; }
 .highlights__wide { margin: 0; }
 .highlights__wide img { min-height: 34rem; object-fit: cover; filter: contrast(1.03); }
 .highlights__wide figcaption { padding-top: .8rem; font: .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .highlights__quote { grid-column: 1 / 3; display: grid; grid-template-columns: .28fr 1fr; align-items: start; border-top: 1px solid; padding-top: 2rem; }
-.highlights__quote span { color: var(--blood); font: 10rem/.65 var(--serif); }
+.highlights__quote span { color: var(--accent); font: 10rem/.65 var(--serif); }
 .highlights__quote p { margin: 0; font: clamp(3.5rem, 8vw, 8rem)/.9 var(--serif); text-align: right; }
 
 .countdown { text-align: center; }
@@ -181,13 +179,13 @@ h2 em, h1 em { font-weight: 400; }
 .countdown__grid div:last-child { border-right: 0; }
 .countdown__grid strong { display: block; font: clamp(3.2rem, 10vw, 10rem)/.9 var(--serif); font-variant-numeric: tabular-nums; }
 .countdown__grid span { font: .67rem var(--mono); text-transform: uppercase; letter-spacing: .09em; }
-.countdown__date { margin: 2rem 0 0; color: var(--blood); font: .75rem var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.countdown__date { margin: 2rem 0 0; color: var(--ground-ink); font: .75rem var(--mono); text-transform: uppercase; letter-spacing: .08em; }
 
 .rsvp { min-height: 82svh; display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; gap: 3rem; }
 .rsvp__copy h2 { margin: 1.5rem 0 2rem; }
-.rsvp__copy h2 em { color: var(--blood); }
+.rsvp__copy h2 em { color: var(--accent); }
 .rsvp__copy > p:last-child { max-width: 28rem; }
-.rsvp__button { width: min(100%, 30rem); aspect-ratio: 1; justify-self: end; border: 1px solid var(--blood); border-radius: 50%; background: transparent; color: var(--blood); cursor: pointer; transition: color .3s, background .3s, transform .3s; }
+.rsvp__button { width: min(100%, 30rem); aspect-ratio: 1; justify-self: end; border: 1px solid var(--accent); border-radius: 50%; background: transparent; color: var(--accent); cursor: pointer; transition: color .3s, background .3s, transform .3s; }
 .rsvp__button span { display: block; font: clamp(5rem, 10vw, 10rem)/.8 var(--serif); }
 .rsvp__button small { display: block; margin-top: 1.25rem; font: .7rem var(--mono); text-transform: uppercase; letter-spacing: .08em; }
 .rsvp__button:hover { background: var(--blood); color: var(--paper); transform: rotate(-3deg); }
@@ -367,3 +365,342 @@ h2 em, h1 em { font-weight: 400; }
   *, *::before, *::after { scroll-behavior: auto!important; animation-duration: .01ms!important; animation-iteration-count: 1!important; transition-duration: .01ms!important; }
   .js-reveal { opacity: 1; transform: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Illustration layer — editorial skin
+   The most type-led of the four, so motifs act as marks in the margin
+   rather than pictures: hairlines, a grid ground, one drawn mark per slot.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --motif-stroke: var(--ink);
+  --motif-accent: var(--blood);
+  --motif-weight: 1.4;
+}
+
+.motif { display: block; width: 100%; height: 100%; overflow: visible; }
+[data-motif] { line-height: 0; }
+.motif-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Cover — the fine grid replaces the cover photograph on both leaves. */
+.intro-card__image {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  filter: none;
+  background: var(--ink);
+  --motif-stroke: var(--paper); --motif-weight: .9;
+  opacity: .5;
+}
+.intro-card__image .motif { width: 100%; height: 100%; }
+
+.intro__backdrop { --motif-stroke: var(--paper); --motif-weight: .9; }
+.intro__backdrop .motif { width: 100%; height: 100%; opacity: .13; }
+
+/* Hero — the arch frames the names; the names are the image. */
+.hero__image {
+  position: relative;
+  display: block;
+  --motif-stroke: var(--blood); --motif-accent: var(--gold); --motif-weight: 1.2;
+}
+.hero__image .motif { position: absolute; inset: 8% 4%; width: auto; height: auto; opacity: .75; }
+
+/* Story frames — one drawn mark per card, on the paper ground. */
+.story-card__art {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--paper-deep);
+  --motif-stroke: var(--ink); --motif-accent: var(--blood); --motif-weight: 1.5;
+}
+.story-card__art .motif { position: absolute; inset: 9%; width: auto; height: auto; }
+
+/* Venue — diyas instead of the candlelit courtyard. */
+.venue__image {
+  position: relative;
+  display: block;
+  background: var(--ink);
+  --motif-stroke: var(--paper); --motif-accent: var(--gold); --motif-weight: 1.5;
+}
+.venue__image .motif {
+  position: absolute; top: 50%; right: 8%; left: 8%;
+  width: auto; height: min(38vh, 320px);
+  transform: translateY(-50%);
+  opacity: .85;
+}
+
+/* Dress — the silhouette, with the swatch row doing the real work. */
+.dress__art {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  max-height: min(52vh, 460px);
+  background: var(--paper-deep);
+  --motif-stroke: var(--ink); --motif-accent: var(--gold); --motif-weight: 1.5;
+}
+.dress__art .motif { position: absolute; inset: 8%; width: auto; height: auto; }
+
+/* Highlights — a garland rules the wide slot. */
+.highlights__art {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 2;
+  background: var(--paper-deep);
+  --motif-stroke: var(--blood); --motif-accent: var(--gold); --motif-weight: 1.6;
+}
+.highlights__art .motif { position: absolute; inset: 14% 8%; width: auto; height: auto; }
+/* Sliced, not fitted: the band height sets the flower size and the width just
+   decides how many swags hang there. An inset box with width/height:auto is
+   NOT a definite box for a replaced element, so the height is set outright. */
+.highlights__art .motif--marigold {
+  overflow: hidden;
+  left: 8%; right: auto; width: 84%;
+  top: 50%; bottom: auto; height: 40%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 720px) {
+  .venue__image .motif { height: 22vh; }
+  .dress__art { max-height: 40vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-draw], [data-draw] * { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
+}
+
+
+/* Restored photography — venue and the hands-and-details still life. Faces and
+   the couple stay illustrated; everything here is artwork, hands or a place. */
+.venue__image { background: var(--ink); }
+.venue__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.story-card > img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+
+/* ============================================================
+   THE EVENING
+   One unbroken Karachi evening. The ground is not set per
+   section; it is interpolated from scroll progress in main.js
+   between authored stops (4:00 afternoon through to night).
+   The values below are the 4:00 starting state and the
+   no-JS / reduced-motion fallback, so the page is complete
+   and readable with the script removed.
+   ============================================================ */
+:root {
+  --ground: #f3ecdd;
+  --ground-ink: #0b0b0a;
+  /* The accent is the same ink, lit for the hour: oxblood while there is
+     daylight on the page, gold foil once the lamps are on. Oxblood on the
+     night ground measures 2.3:1, which no amount of intent makes legible. */
+  --accent: #971c35;
+}
+body {
+  background: var(--ground);
+  color: var(--ground-ink);
+  /* Only the flip of text colour is transitioned. The ground itself is
+     driven frame by frame from scroll, so transitioning it would lag. */
+  transition: color .22s linear;
+}
+html { background: var(--ground); }
+/* Motifs are monoline and take their stroke from a custom property,
+   so the whole illustrated layer follows the hour for free. */
+:root { --motif-stroke: var(--ground-ink); }
+
+/* The hero is 4:00, the brightest point of the evening, so it no longer
+   paints its own dark ground. */
+.hero { background: transparent; color: var(--ground-ink); }
+.hero__rule { border-color: color-mix(in srgb, currentColor 22%, transparent); }
+
+/* ITALIC DESCENDER CLEARANCE.
+   h2 runs at line-height .86, which crops the tail of g, y, j in the
+   italic clause. Every display italic gets its own leading and a
+   reserve below. */
+h2 em, h1 em { display: inline-block; line-height: 1.06; padding-bottom: .06em; }
+
+/* ============================================================
+   THE FOLD  (signature move)
+   The invitation opens as it is read. Each act hinges down from
+   its top edge the way a folded card falls open, and the crease
+   catches light as it flattens. The intro card already opens on
+   two vertical leaves; this continues that language down the page
+   rather than introducing a second one.
+   Angle is deliberately small. At premium-minimal this should
+   register as paper settling, not as a 3D flip.
+   ============================================================ */
+.fold { perspective: 1400px; perspective-origin: 50% 0%; }
+.fold-leaf {
+  transform-origin: 50% 0%;
+  /* No permanent will-change here. GSAP promotes each leaf for the span of
+     its own tween and drops it again; pinning 17 elements into their own
+     compositing layers for the life of the page costs memory and buys
+     nothing once the leaf has settled. */
+}
+.fold-leaf::after {
+  /* The crease. Sits on the hinge, brightens as the leaf flattens,
+     and is driven by --crease which main.js writes per leaf. */
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 85%, transparent),
+    transparent);
+  opacity: calc(var(--crease, 0) * .55);
+  pointer-events: none;
+}
+
+/* ============================================================
+   THE PEAK  (the date reveal)
+   The announcement gets the most scroll room on the page. The
+   run-up is deliberately empty: the heading settles, the page
+   holds, and only then is the card there to be scratched.
+   ============================================================ */
+.announcement { min-height: 118svh; align-content: center; }
+.announcement__copy { position: relative; z-index: 2; }
+.date-scratch { position: relative; z-index: 3; }
+/* At the peak the page is quiet, so the card is the only lit surface. */
+.date-scratch__stage { box-shadow: 0 1.5rem 4rem color-mix(in srgb, var(--ink) 22%, transparent); }
+
+@media (max-width: 760px) {
+  .announcement { min-height: auto; align-content: start; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   The fold and the scroll-driven ground are both scroll-linked
+   animation, so both are dropped. The page falls back to the
+   authored 4:00 palette and every leaf sits flat and visible.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fold-leaf { transform: none!important; opacity: 1!important; }
+  .fold-leaf::after { opacity: 0; }
+}
+
+/* While the fold is running, GSAP owns opacity and transform on these
+   elements. The reveal transition is stood down so the two do not fight. */
+.sc-fold-active .js-reveal { opacity: 1; transform: none; transition: none; }
+
+/* ============================================================
+   PLATES
+   The photograph mounted inside a paper mat, the way a plate is
+   mounted in a printed magazine. The mat matters structurally,
+   not just decoratively: the back half of the evening is close
+   to black, and a dark photograph bled to the edge would have
+   no boundary against the ground. The mat keeps a lit surface
+   under every image, so a frame still reads at 9pm.
+   ============================================================ */
+.plate {
+  padding: clamp(.55rem, 1.5vw, 1.1rem);
+  background: var(--paper-deep);
+  aspect-ratio: auto;
+}
+.plate img { display: block; width: 100%; height: auto; }
+.story-card__art.plate img { aspect-ratio: 4 / 3; object-fit: cover; }
+.dress__art.plate img { aspect-ratio: 3 / 4; object-fit: cover; }
+.highlights__art.plate img { aspect-ratio: 5 / 2; object-fit: cover; }
+
+/* The old max-height capped a drawn mark inside a fixed box. A mounted
+   photograph sets its own height from its ratio, so cap the width instead
+   or the mat crops the image it is supposed to be holding. */
+.dress__art.plate { max-height: none; width: min(100%, 27rem); margin-inline: auto; }
+
+/* ============================================================
+   THE DATE, AS A DATELINE
+   This is the peak of the page and it was the least designed
+   thing on it: three numerals pushed to the edges of a 1px box
+   by justify-content:space-between, with grey separators
+   stranded in the gaps. It read as a form field.
+
+   Rebuilt as a printed dateline, which is what the rest of the
+   site already is (this is "The Wedding Issue"). The numerals
+   group optically instead of spreading, a rule sits under them,
+   and a mono line carries the information the numerals alone
+   cannot: which day, which year, which city.
+   ============================================================ */
+.date-scratch__stage {
+  min-height: clamp(9rem, 15vw, 12.5rem);
+  padding: clamp(1.1rem, 3vw, 1.9rem);
+  /* A double rule reads as printed stock. A single hairline reads as an
+     input. The inner rule sits below the scratch cover so it is revealed
+     with everything else. */
+  border: 1px solid var(--ink);
+}
+.date-scratch__stage::after {
+  content: "";
+  position: absolute;
+  inset: clamp(.45rem, 1.2vw, .7rem);
+  border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  pointer-events: none;
+}
+.date-scratch__value {
+  display: grid;
+  justify-items: center;
+  gap: clamp(.7rem, 1.8vw, 1.1rem);
+  width: 100%;
+  padding: 0;
+}
+.date-scratch__numerals {
+  display: flex;
+  align-items: center;
+  /* Grouped, not spread. space-between across the full card width is what
+     stranded the separators. */
+  justify-content: center;
+  gap: clamp(.45rem, 1.6vw, 1rem);
+  color: var(--blood);
+  font: clamp(3.6rem, 7vw, 7rem)/1 var(--serif);
+  letter-spacing: -.05em;
+  white-space: nowrap;
+}
+/* The separators are the same ink as the numerals, quietened by size rather
+   than by colour. As grey --muted they measured 2.98:1, under the 3:1 that
+   large text needs, and read as specks. */
+.date-scratch__numerals i {
+  color: var(--blood);
+  font-size: .24em;
+  font-style: normal;
+  transform: translateY(-.42em);
+}
+.date-scratch__rule {
+  width: min(100%, 15rem);
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 26%, transparent);
+}
+.date-scratch__caption {
+  color: var(--ink);
+  font: .66rem/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .date-scratch__stage { min-height: 8.5rem; }
+  .date-scratch__numerals { font-size: clamp(3.2rem, 16vw, 5rem); }
+  .date-scratch__caption { font-size: .58rem; letter-spacing: .1em; }
+}
+
+/* The base .date-scratch__value rule still carries justify-content:space-between
+   from when this was a flex row. On a one-column grid that parks the whole
+   track at the start, which left the numerals hard left with the rule and the
+   caption stranded beside a large empty right side.
+
+   Resolved by committing to left rather than by centring: the masthead, the
+   headings and the announcement copy on this page all sit on the left margin,
+   and a dateline belongs there too. The rule now spans the full card, which
+   is what ties the numerals to the caption instead of leaving them floating. */
+.date-scratch__value { justify-content: start; justify-items: start; }
+.date-scratch__rule { width: 100%; }
+.date-scratch__caption { text-align: left; }
+
+@media (max-width: 760px) {
+  /* On the narrow card the numerals were filling barely half the width, which
+     is what made the right side read as a hole. This is the peak of the page;
+     it should fill its card. */
+  .date-scratch__numerals { font-size: clamp(3.6rem, 21vw, 6rem); }
+}
+
+/* The single grid track was auto-sized, so it was only as wide as the
+   numerals and the rule's width:100% resolved against that, not against the
+   card. An explicit 1fr track makes the rule span the full inner width while
+   justify-items:start keeps everything on the left margin. */
+.date-scratch__value { grid-template-columns: 1fr; }
