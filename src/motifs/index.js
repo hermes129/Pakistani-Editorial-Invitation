@@ -847,3 +847,99 @@ Object.assign(motifs, {
   ajrakTile, ajrakBorder, mehendiTile, fineGridTile,
   candleRow, rooftopSkyline, nikkahDocument, chakri, lanternString,
 });
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Karachi Deco
+   Art Deco ornament is compass-and-rule work: an arc struck from one
+   centre, stepped back at a fixed interval, and mirrored. Both marks below
+   are generated from that rule rather than drawn by hand, so the stepping
+   stays exact at any size, which is the whole point of the idiom.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Deco fan — the sunburst over a 1930s doorway. Rays struck from a single
+ * centre inside a stepped arch, with concentric arcs banding across them.
+ * `rays` must stay odd so one ray lands on the axis of symmetry.
+ */
+export function decoFan({ draw = true, rays = 9, bands = 3 } = {}) {
+  const CX = 60, CY = 62, R = 54;
+  const spokes = [];
+  for (let i = 0; i < rays; i += 1) {
+    // Spread across a half circle, first and last lying along the base.
+    const a = Math.PI + (i / (rays - 1)) * Math.PI;
+    spokes.push(`M${CX} ${CY} L${(CX + Math.cos(a) * R).toFixed(2)} ${(CY + Math.sin(a) * R).toFixed(2)}`);
+  }
+  const arcs = [];
+  for (let b = 1; b <= bands; b += 1) {
+    const r = (R * b) / (bands + 1);
+    arcs.push(`M${CX - r} ${CY} a${r} ${r} 0 0 1 ${r * 2} 0`);
+  }
+  return `<svg class="motif motif--deco-fan" viewBox="0 0 120 70" aria-hidden="true" focusable="false">
+    <g ${S} ${draw ? 'data-draw' : ''}>
+      <path d="${spokes.join(' ')}"/>
+      <path d="M${CX - R} ${CY} a${R} ${R} 0 0 1 ${R * 2} 0"/>
+    </g>
+    <g ${SA} opacity=".7">
+      <path d="${arcs.join(' ')}"/>
+    </g>
+  </svg>`;
+}
+
+/**
+ * Deco rule — the stepped band that runs under a facade: a ziggurat skyline
+ * repeating between two hairlines, with a flute dropped on each axis.
+ *
+ * A band motif, so it obeys the kit's sizing rule literally. The viewBox is
+ * 4800 wide against 30 tall, which is wider than any viewport is at a 30px
+ * band height, so with `xMinYMid slice` the height always governs the scale
+ * and the surplus crops off the right. Getting this wrong is not subtle: at
+ * `xMidYMid` and 960 wide the band scaled up 1.35x and sliced its own top and
+ * bottom rules clean off, which is the exact failure the kit notes warn about.
+ */
+export function decoRule({ draw = true, units = 40, period = 120 } = {}) {
+  // A 4:1 repeat against the band height by default. At 2:1 the ziggurat came
+  // out as a fine tooth-comb — twenty-one repeats across a desktop, reading as
+  // graph paper rather than as a cornice.
+  //
+  // `period` is a knob so a host can make the band land on whole repeats at
+  // its own width: pick the repeat count nearest the default, then stretch or
+  // squeeze the period to divide the visible span exactly. Left alone the
+  // band tiles at 120 and simply crops, which is fine mid-page and wrong
+  // anywhere the two ends are both on screen.
+  const P = period, W = P * units;
+  // BASE sits 4 units clear of the lower rule at 28. At 26 the drop into each
+  // valley landed within a couple of pixels of it and read as touching.
+  const BASE = 24, TOP = 7, STEP = 5.5, TREAD = P * (2 / 15);
+  const n = (v) => Math.round(v * 100) / 100;
+  const sky = [];
+  const flutes = [];
+  for (let i = 0; i < units; i += 1) {
+    const x = i * P;
+    // Up three treads, across the plateau, down three: the ziggurat every
+    // 1930s cornice, radiator grille and lift door in Karachi was cut from.
+    sky.push(
+      `M${n(x)} ${BASE}`,
+      `L${n(x)} ${BASE - STEP} L${n(x + TREAD)} ${BASE - STEP}`,
+      `L${n(x + TREAD)} ${BASE - STEP * 2} L${n(x + TREAD * 2)} ${BASE - STEP * 2}`,
+      `L${n(x + TREAD * 2)} ${TOP} L${n(x + P - TREAD * 2)} ${TOP}`,
+      `L${n(x + P - TREAD * 2)} ${BASE - STEP * 2} L${n(x + P - TREAD)} ${BASE - STEP * 2}`,
+      `L${n(x + P - TREAD)} ${BASE - STEP} L${n(x + P)} ${BASE - STEP}`,
+      `L${n(x + P)} ${BASE}`,
+    );
+    // A keystone tick hung from the plateau, not a full-height flute: run it
+    // down to the baseline and it reads as a stray mark floating in the void
+    // under the ziggurat rather than as part of the cornice.
+    flutes.push(`M${n(x + P / 2)} ${TOP} L${n(x + P / 2)} ${TOP + 7}`);
+  }
+  return `<svg class="motif motif--deco-rule" viewBox="0 0 ${n(W)} 30"
+       preserveAspectRatio="xMinYMid slice" aria-hidden="true" focusable="false">
+    <g ${S} ${draw ? 'data-draw' : ''}>
+      <path d="M0 2 L${n(W)} 2"/>
+      <path d="M0 28 L${n(W)} 28"/>
+    </g>
+    <path ${SA} d="${sky.join(' ')}" opacity=".8"/>
+    <path ${SA} d="${flutes.join(' ')}" opacity=".45"/>
+  </svg>`;
+}
+
+Object.assign(motifs, { decoFan, decoRule });
